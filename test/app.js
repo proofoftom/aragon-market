@@ -16,7 +16,7 @@ const getContract = name => artifacts.require(name)
 const ANY_ADDRESS = '0xffffffffffffffffffffffffffffffffffffffff'
 
 contract('MarketApp', accounts => {
-  let APP_MANAGER_ROLE, INCREMENT_ROLE, DECREMENT_ROLE
+  let APP_MANAGER_ROLE, TRADE_ROLE
   let daoFact, appBase, app
 
   const firstAccount = accounts[0]
@@ -35,8 +35,7 @@ contract('MarketApp', accounts => {
 
     // Setup constants
     APP_MANAGER_ROLE = await kernelBase.APP_MANAGER_ROLE()
-    INCREMENT_ROLE = await appBase.INCREMENT_ROLE()
-    DECREMENT_ROLE = await appBase.DECREMENT_ROLE()
+    TRADE_ROLE = await appBase.TRADE_ROLE()
   })
 
   beforeEach(async () => {
@@ -71,16 +70,7 @@ contract('MarketApp', accounts => {
     await acl.createPermission(
       ANY_ADDRESS,
       app.address,
-      INCREMENT_ROLE,
-      firstAccount,
-      {
-        from: firstAccount,
-      }
-    )
-    await acl.createPermission(
-      ANY_ADDRESS,
-      app.address,
-      DECREMENT_ROLE,
+      TRADE_ROLE,
       firstAccount,
       {
         from: firstAccount,
@@ -88,16 +78,16 @@ contract('MarketApp', accounts => {
     )
   })
 
-  it('should be incremented by any address', async () => {
+  it('should allow any address to trade and increment order number', async () => {
     app.initialize()
-    await app.increment(1, { from: secondAccount })
-    assert.equal(await app.value(), 1)
+    await app.trade({ from: secondAccount })
+    assert.equal(await app.orderNumber(), 1)
   })
 
-  it('should not be decremented if already 0', async () => {
-    app.initialize()
-    return assertRevert(async () => {
-      return app.decrement(1)
-    })
-  })
+  // it('should not be decremented if already 0', async () => {
+  //   app.initialize()
+  //   return assertRevert(async () => {
+  //     return app.decrement(1)
+  //   })
+  // })
 })

@@ -75,7 +75,7 @@ contract Template is TemplateBase {
         Voting voting = Voting(dao.newAppInstance(votingAppId, latestVersionAppBase(votingAppId)));
         TokenManager tokenManager = TokenManager(dao.newAppInstance(tokenManagerAppId, latestVersionAppBase(tokenManagerAppId)));
 
-        MiniMeToken token = tokenFactory.createCloneToken(MiniMeToken(0), 0, "App token", 0, "APP", true);
+        MiniMeToken token = tokenFactory.createCloneToken(MiniMeToken(0), 0, "Market token", 0, "MRKT", true);
         token.changeController(tokenManager);
 
         app.initialize();
@@ -88,8 +88,9 @@ contract Template is TemplateBase {
 
         acl.createPermission(ANY_ENTITY, voting, voting.CREATE_VOTES_ROLE(), root);
 
-        acl.createPermission(voting, app, app.INCREMENT_ROLE(), voting);
-        acl.createPermission(ANY_ENTITY, app, app.DECREMENT_ROLE(), root);
+        // Allow any user to trade
+        acl.createPermission(ANY_ENTITY, app, app.TRADE_ROLE(), root);
+
         acl.grantPermission(voting, tokenManager, tokenManager.MINT_ROLE());
 
         // Clean up permissions

@@ -13,13 +13,10 @@ api.store(
 
     switch (event.event) {
       case INITIALIZATION_TRIGGER:
-        newState = { count: await getValue() }
+        newState = { orderNumber: await getValue() }
         break
-      case 'Increment':
-        newState = { count: await getValue() }
-        break
-      case 'Decrement':
-        newState = { count: await getValue() }
+      case 'Trade':
+        newState = { orderNumber: await getValue() }
         break
       default:
         newState = state
@@ -34,5 +31,5 @@ api.store(
 )
 
 async function getValue() {
-  return parseInt(await api.call('value').toPromise(), 10)
+  return parseInt(await api.call('orderNumber').toPromise(), 10)
 }

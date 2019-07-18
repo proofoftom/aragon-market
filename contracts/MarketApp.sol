@@ -8,35 +8,23 @@ contract MarketApp is AragonApp {
     using SafeMath for uint256;
 
     /// Events
-    event Increment(address indexed entity, uint256 step);
-    event Decrement(address indexed entity, uint256 step);
+    event Trade(address indexed entity, uint256 orderNumber);
 
     /// State
-    uint256 public value;
+    uint256 public orderNumber;
 
     /// ACL
-    bytes32 constant public INCREMENT_ROLE = keccak256("INCREMENT_ROLE");
-    bytes32 constant public DECREMENT_ROLE = keccak256("DECREMENT_ROLE");
+    bytes32 constant public TRADE_ROLE = keccak256("TRADE_ROLE");
 
     function initialize() public onlyInit {
         initialized();
     }
 
     /**
-     * @notice Increment the counter by `step`
-     * @param step Amount to increment by
+     * @notice Create a new buy/sell order
      */
-    function increment(uint256 step) external auth(INCREMENT_ROLE) {
-        value = value.add(step);
-        emit Increment(msg.sender, step);
-    }
-
-    /**
-     * @notice Decrement the counter by `step`
-     * @param step Amount to decrement by
-     */
-    function decrement(uint256 step) external auth(DECREMENT_ROLE) {
-        value = value.sub(step);
-        emit Decrement(msg.sender, step);
+    function trade() external auth(TRADE_ROLE) {
+        orderNumber = orderNumber.add(1);
+        emit Trade(msg.sender, orderNumber);
     }
 }
