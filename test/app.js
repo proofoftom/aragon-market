@@ -1,5 +1,5 @@
 /* global artifacts contract before beforeEach it assert */
-const { assertRevert } = require('@aragon/test-helpers/assertThrow')
+// const { assertRevert } = require('@aragon/test-helpers/assertThrow')
 
 const MarketApp = artifacts.require('MarketApp.sol')
 const DAOFactory = artifacts.require(
