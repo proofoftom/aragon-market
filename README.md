@@ -1,21 +1,52 @@
-# Aragon React Boilerplate
+# Market App
 
-> 🕵️ [Find more boilerplates using GitHub](https://github.com/search?q=topic:aragon-boilerplate) |
-> ✨ [Official boilerplates](https://github.com/search?q=topic:aragon-boilerplate+org:aragon)
+> [0x](https://0x.org) relayer interface for [Aragon](https://www.aragon.org) DAOs
 
-React boilerplate for Aragon applications.
+![Screenshot of Market UI components](./screenshot.png)
 
-This boilerplate includes a fully working example app, complete with a background worker and a front-end in React (with Aragon UI). Also comes with a DAO Template which will allow for using your app to interact with other Aragon apps like the Voting app. You can read more about DAO Template [here](https://hack.aragon.org/docs/templates-intro).
+## Background
 
-## Usage
+This app is a PoC experimenting with 0x relayer integration for Aragon DAOs and is in a very early alpha stage: do **NOT** use in production unless you know what you're doing.
 
-To setup use the command `create-aragon-app`:
+## Install
 
 ```sh
-npx create-aragon-app <app-name> react
+git clone https://github.com/proofoftom/aragon-market.git
 ```
 
-## Structure
+```sh
+cd aragon-market
+```
+
+```sh
+npm install
+```
+
+## Run the template
+
+```sh
+npx aragon run --template Template --template-init @ARAGON_ENS
+```
+
+## Running your app
+
+### Using HTTP
+
+Running your app using HTTP will allow for a faster development process of your app's front-end, as it can be hot-reloaded without the need to execute `aragon run` every time a change is made.
+
+- First start your app's development server running `npm run start:app`, and keep that process running. By default it will rebuild the app and reload the server when changes to the source are made.
+
+- After that, you can run `npm run start:http` or `npm run start:http:template` which will compile your app's contracts, publish the app locally and create a DAO. You will need to stop it and run it again after making changes to your smart contracts.
+
+Changes to the app's background script (`app/script.js`) cannot be hot-reloaded, after making changes to the script, you will need to either restart the development server (`npm run start:app`) or rebuild the script `npm run build:script`.
+
+### Using IPFS
+
+Running your app using IPFS will mimic the production environment that will be used for running your app. `npm run start:ipfs` will run your app using IPFS. Whenever a change is made to any file in your front-end, a new version of the app needs to be published, so the command needs to be restarted.
+
+## What's in this boilerplate?
+
+### Structure
 
 This boilerplate has the following structure:
 
@@ -47,34 +78,6 @@ root
 - [**manifest.json**](https://hack.aragon.org/docs/cli-global-confg#the-manifestjson-file): Aragon configuration file. Includes web-specific configurations.
 - [**truffle.js**](https://truffleframework.com/docs/truffle/reference/configuration): Truffle configuration file.
 - [**package.json**](https://docs.npmjs.com/creating-a-package-json-file): Main npm configuration file.
-
-## Make the template work with your app
-
-- Edit the roles defined in the template to configure your DAO as you want!
-
-## Run the template
-
-```sh
-npx aragon run --template Template --template-init @ARAGON_ENS
-```
-
-## Running your app
-
-### Using HTTP
-
-Running your app using HTTP will allow for a faster development process of your app's front-end, as it can be hot-reloaded without the need to execute `aragon run` every time a change is made.
-
-- First start your app's development server running `npm run start:app`, and keep that process running. By default it will rebuild the app and reload the server when changes to the source are made.
-
-- After that, you can run `npm run start:http` or `npm run start:http:template` which will compile your app's contracts, publish the app locally and create a DAO. You will need to stop it and run it again after making changes to your smart contracts.
-
-Changes to the app's background script (`app/script.js`) cannot be hot-reloaded, after making changes to the script, you will need to either restart the development server (`npm run start:app`) or rebuild the script `npm run build:script`.
-
-### Using IPFS
-
-Running your app using IPFS will mimic the production environment that will be used for running your app. `npm run start:ipfs` will run your app using IPFS. Whenever a change is made to any file in your front-end, a new version of the app needs to be published, so the command needs to be restarted.
-
-## What's in this boilerplate?
 
 ### npm Scripts
 

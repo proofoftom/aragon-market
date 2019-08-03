@@ -12,7 +12,7 @@ function Navbar() {
       primary={
         <React.Fragment>
           <h1 style={{ fontSize: 'x-large', display: 'inline' }}>Market</h1>
-          <SpacedBadge>ACME/DAI</SpacedBadge>
+          <SpacedBadge>MRKT/DAI</SpacedBadge>
         </React.Fragment>
       }
       secondary={

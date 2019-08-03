@@ -75,7 +75,7 @@ contract Template is TemplateBase {
         Voting voting = Voting(dao.newAppInstance(votingAppId, latestVersionAppBase(votingAppId)));
         TokenManager tokenManager = TokenManager(dao.newAppInstance(tokenManagerAppId, latestVersionAppBase(tokenManagerAppId)));
 
-        MiniMeToken token = tokenFactory.createCloneToken(MiniMeToken(0), 0, "ACME token", 0, "ACME", true);
+        MiniMeToken token = tokenFactory.createCloneToken(MiniMeToken(0), 0, "MRKT token", 0, "MRKT", true);
         token.changeController(tokenManager);
 
         app.initialize();
